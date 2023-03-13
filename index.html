@@ -18,16 +18,20 @@
             justify-content: center;
         }
         .bingocard{
-            width: 7vw;
-            height: 7vw;
-         margin:1px;
+            width: 125px;
+            height: 125px;
+            margin:1px;
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
     <main>
-
-        <button id="generate">Generate</button>
+        <div style="display: flex;">
+            <textarea name="" id="bingo" cols="50" rows="2" placeholder="enter 25 values in diferent rows for the bingo"></textarea>
+            <button style="margin: 1px;" id="generate">Generate</button>
+            <textarea name="" id="people" cols="50" rows="2" placeholder="enter names of peaople playing in diferent rows"></textarea>
+        </div>
         
         <div id="results"> 
             
