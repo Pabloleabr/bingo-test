@@ -1,23 +1,29 @@
 const results = document.getElementById("results")
 const button = document.getElementById("generate")
+let bingos = {}
 
 
-function createPortion(value){
+function createPortion(value, x, y){
     let ele = document.createElement("button") 
     ele.name = value
     ele.classList.add("bingocard")
     ele.style.backgroundColor = "whitesmoke"
     ele.onclick = () => {
         let samevalue = document.querySelectorAll(`button[name="${value}"]`);
-        console.log(samevalue, `button[name="${value}"]`);
         samevalue.forEach(element => {
             element.style.backgroundColor = element.style.backgroundColor != "whitesmoke" ?  "whitesmoke" : "rgb(149, 236, 163)";
         });
+        for (const key in bingos) {
+            if (Object.hasOwnProperty.call(bingos, key)) {
+                bingos[key][value][2] = !bingos[key][value][2] 
+            }
+        } 
+        
+        console.log(bingos);
     }
 
     return ele
 }
-
 /** example
  * 1
  * 2
@@ -58,14 +64,16 @@ function generate() {
         BINGO.sort((a, b) => 0.5 - Math.random());
         const h2 = document.createElement("H2");
         h2.innerText = name
+        bingos[name] = {}
         results.appendChild(h2)
-        for (let index = 0; index < resize; index ++) {
+        for (let x = 0; x < resize; x ++) {
             const element = document.createElement("div")
             element.style.display = "flex"
             for (let y = 0; y < resize; y++) {
                 let value = BINGO.pop()
-                let cell = createPortion(value)
+                let cell = createPortion(value, x, y)
                 cell.innerText = value
+                bingos[name][value] = [x, y, false]
                 element.appendChild(cell)
             }
             results.appendChild(element)
