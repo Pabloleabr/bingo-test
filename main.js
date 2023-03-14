@@ -12,7 +12,7 @@ function createPortion(value){
     ele.onclick = () => {
         let samevalue = document.querySelectorAll(`button[name="${value}"]`);
         samevalue.forEach(element => {
-            element.style.backgroundColor = element.style.backgroundColor != "whitesmoke" ?  "whitesmoke" : "rgb(149, 236, 163)";
+            element.style.backgroundColor = element.style.backgroundColor != "whitesmoke" ?  "whitesmoke" : "#79E8B1";
         });
         
         for (const name in bingos) {
@@ -27,6 +27,7 @@ function createPortion(value){
             //comprueba todas la filas
             if((positions[name]["0_0"] && positions[name]["0_1"] && positions[name]["0_2"]  && positions[name]["0_3"]  && positions[name]["0_4"]) || (positions[name]["1_0"] && positions[name]["1_1"] && positions[name]["1_2"]  && positions[name]["1_3"]  && positions[name]["1_4"]) || (positions[name]["2_0"] && positions[name]["2_1"] && positions[name]["2_2"]  && positions[name]["2_3"]  && positions[name]["2_4"]) || (positions[name]["3_0"] && positions[name]["3_1"] && positions[name]["3_2"]  && positions[name]["3_3"]  && positions[name]["3_4"]) || (positions[name]["4_0"] && positions[name]["4_1"] && positions[name]["4_2"]  && positions[name]["4_3"]  && positions[name]["4_4"])){
                 winners[name] = true
+                
             }
             //comprueba todas las columanas
             else if((positions[name]["0_0"] && positions[name]["1_0"] && positions[name]["2_0"]  && positions[name]["3_0"]  && positions[name]["4_0"]) || (positions[name]["0_1"] && positions[name]["1_1"] && positions[name]["2_1"]  && positions[name]["3_1"]  && positions[name]["4_1"]) || (positions[name]["0_2"] && positions[name]["1_2"] && positions[name]["2_2"]  && positions[name]["3_2"]  && positions[name]["4_2"]) ||  (positions[name]["0_3"] && positions[name]["1_3"] && positions[name]["2_3"]  && positions[name]["3_3"]  && positions[name]["4_3"]) ||  (positions[name]["0_4"] && positions[name]["1_4"] && positions[name]["2_4"]  && positions[name]["3_4"]  && positions[name]["4_4"])){
@@ -38,6 +39,15 @@ function createPortion(value){
             }
             else {
                 winners[name] = false
+            }
+        }
+
+        for (const name in winners) {
+            if (Object.hasOwnProperty.call(winners, name)) {
+                if (winners[name]) {
+                    window.alert(name + ": Bingoooo!!")
+                    document.getElementById(name).scrollIntoView({behavior: 'smooth'});
+                }
             }
         }
         
@@ -83,11 +93,13 @@ function generate(bingo, people) {
     for (const name of PEOPLE) {
         const BINGO = bingoElement.split("\n")
         BINGO.sort((a, b) => 0.5 - Math.random());
-        const h2 = document.createElement("H2");
+        const h2 = document.createElement("H1");
         h2.innerText = name
+        h2.id = name
         bingos[name] = {}
         positions[name] = {}
         results.appendChild(h2)
+        let middlemark = true
         for (let x = 0; x < resize; x ++) {
             const element = document.createElement("div")
             element.style.display = "flex"
@@ -97,6 +109,13 @@ function generate(bingo, people) {
                 cell.innerText = value
                 bingos[name][value] = [x, y, false]
                 positions[name][x + "_" + y] = false
+                if(document.getElementById("middle").checked && x == 2 && y == 2 && middlemark){
+                    cell.innerText = ""
+                    cell.disabled = true
+                    bingos[name][value] = [x, y, true]
+                    positions[name][x + "_" + y] = true
+                    middlemark = false
+                }
                 element.appendChild(cell)
             }
             results.appendChild(element)

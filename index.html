@@ -9,7 +9,8 @@
 
     <style>
         body{
-            background-color: rgb(158, 244, 255);
+            background-color: #7ECCF2;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
         main{
             display: flex;
@@ -31,6 +32,10 @@
             <textarea name="" id="bingo" cols="50" rows="2" placeholder="enter 25 values in diferent rows for the bingo"></textarea>
             <button style="margin: 1px;" id="generate">Generate</button>
             <textarea name="" id="people" cols="50" rows="2" placeholder="enter names of peaople playing in diferent rows"></textarea>
+        </div>
+        <div style="display: flex; padding: 1px; border-radius: 2%; margin-top: 5px;">
+            <label for="toggle">Enable middle box to be free</label>
+            <input type="checkbox" name="toggle" id="middle"> (if checked the 13th row must be empty)
         </div>
         
         <div id="results"> 
